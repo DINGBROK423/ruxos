@@ -41,6 +41,7 @@
 #![no_std]
 #![feature(maybe_uninit_uninit_array)]
 #![feature(const_maybe_uninit_uninit_array)]
+#![feature(const_maybe_uninit_zeroed)]
 
 use bitmaps::Bitmap;
 use core::mem::MaybeUninit;
