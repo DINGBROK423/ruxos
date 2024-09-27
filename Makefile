@@ -278,7 +278,7 @@ clean_c::
 
 clean_musl:
 	rm -rf ulib/ruxmusl/build_*
-	rm -rf ulib/ruxmusl/install
+	rm -rf ulib/ruxmusl/install_x86_64_release
 
 .PHONY: all build disasm run justrun debug clippy fmt fmt_c test test_no_fail_fast clean clean_c\
         clean_musl doc disk_image debug_no_attach prebuild _force

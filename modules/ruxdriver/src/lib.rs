@@ -89,6 +89,8 @@ mod ixgbe;
 
 pub mod prelude;
 
+use alloc::{borrow::ToOwned, string::String};
+
 #[allow(unused_imports)]
 use self::prelude::*;
 pub use self::structs::{AxDeviceContainer, AxDeviceEnum};
@@ -163,10 +165,13 @@ impl AllDevices {
     }
 }
 
+static mut IMAGE_PATH: String = String::new();
+
 /// Probes and initializes all device drivers, returns the [`AllDevices`] struct.
-pub fn init_drivers() -> AllDevices {
+pub fn init_drivers(disk_image: &str) -> AllDevices {
     info!("Initialize device drivers...");
     info!("  device model: {}", AllDevices::device_model());
+    unsafe { IMAGE_PATH = disk_image.to_owned() };
 
     let mut all_devs = AllDevices::default();
     all_devs.probe();

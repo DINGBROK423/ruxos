@@ -9,12 +9,15 @@
 
 //! Common traits and types for block storage device drivers (i.e. disk).
 
-#![no_std]
+// #![no_std]
 #![feature(doc_auto_cfg)]
 #![feature(const_trait_impl)]
 
+// #[cfg(feature = "ramdisk")]
+// pub mod ramdisk;
 #[cfg(feature = "ramdisk")]
-pub mod ramdisk;
+pub mod stream_disk;
+pub use stream_disk as ramdisk;
 
 #[cfg(feature = "bcm2835-sdhci")]
 pub mod bcm2835sdhci;

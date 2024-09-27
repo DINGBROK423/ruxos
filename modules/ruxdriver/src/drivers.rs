@@ -11,7 +11,7 @@
 
 #![allow(unused_imports)]
 
-use crate::AxDeviceEnum;
+use crate::{AxDeviceEnum, IMAGE_PATH};
 use driver_common::DeviceType;
 
 #[cfg(feature = "virtio")]
@@ -75,7 +75,8 @@ cfg_if::cfg_if! {
             fn probe_global() -> Option<AxDeviceEnum> {
                 // TODO: format RAM disk
                 Some(AxDeviceEnum::from_block(
-                    driver_block::ramdisk::RamDisk::new(0x100_0000), // 16 MiB
+                    // driver_block::ramdisk::RamDisk::new(0x100_0000), // 16 MiB
+                    driver_block::ramdisk::RamDisk::new(unsafe { &IMAGE_PATH })
                 ))
             }
         }
