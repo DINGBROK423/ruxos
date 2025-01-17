@@ -35,6 +35,7 @@
 extern crate log;
 extern crate alloc;
 
+#[cfg(feature = "use-ramdisk")]
 mod dev;
 mod fs;
 mod mounts;
@@ -48,6 +49,7 @@ pub mod fops;
 
 use alloc::vec::Vec;
 
+#[cfg(feature = "use-ramdisk")]
 use ruxdriver::{prelude::*, AxDeviceContainer};
 
 cfg_if::cfg_if! {
@@ -66,6 +68,7 @@ pub fn init_tempfs() -> MountPoint {
     MountPoint::new("/", mounts::ramfs())
 }
 
+#[cfg(feature = "use-ramdisk")]
 /// Initializes filesystems by block devices.
 pub fn init_blkfs(mut blk_devs: AxDeviceContainer<AxBlockDevice>) -> MountPoint {
     info!("Initialize filesystems...");
@@ -91,23 +94,30 @@ pub fn init_blkfs(mut blk_devs: AxDeviceContainer<AxBlockDevice>) -> MountPoint 
 /// Initializes common filesystems.
 pub fn prepare_commonfs(mount_points: &mut Vec<self::root::MountPoint>) {
     #[cfg(feature = "devfs")]
-    let mount_point = MountPoint::new("/dev", mounts::devfs());
-    mount_points.push(mount_point);
+    {
+        let mount_point = MountPoint::new("/dev", mounts::devfs());
+        mount_points.push(mount_point);
+    }
 
     #[cfg(feature = "ramfs")]
-    let mount_point = MountPoint::new("/tmp", mounts::ramfs());
-    mount_points.push(mount_point);
+    {
+        let mount_point = MountPoint::new("/tmp", mounts::ramfs());
+        mount_points.push(mount_point);
+    }
 
     // Mount another ramfs as procfs
     #[cfg(feature = "procfs")]
-    let mount_point = MountPoint::new("/proc", mounts::procfs().unwrap());
-    mount_points.push(mount_point);
+    {
+        let mount_point = MountPoint::new("/proc", mounts::procfs().unwrap());
+        mount_points.push(mount_point);
+    }
 
     // Mount another ramfs as sysfs
     #[cfg(feature = "sysfs")]
-    let mount_point = MountPoint::new("/sys", mounts::sysfs().unwrap());
-    mount_points.push(mount_point);
-
+    {
+        let mount_point = MountPoint::new("/sys", mounts::sysfs().unwrap());
+        mount_points.push(mount_point);
+    }
     // Mount another ramfs as etcfs
     #[cfg(feature = "etcfs")]
     let mount_point = MountPoint::new("/etc", mounts::etcfs().unwrap());

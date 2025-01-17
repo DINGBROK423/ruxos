@@ -17,20 +17,21 @@ ramfs = ["dep:axfs_ramfs"]
 procfs = ["dep:axfs_ramfs"]
 sysfs = ["dep:axfs_ramfs"]
 etcfs = ["dep:axfs_ramfs"]
-fatfs = ["dep:fatfs"]
+fatfs = ["dep:fatfs", "driver_block"]
 myfs = ["dep:crate_interface"]
 use-ramdisk = []
 alloc = ["axalloc"]
 fp_simd = []
+full = ["devfs", "ramfs", "fatfs", "procfs", "sysfs", "etcfs"]
 
-default = ["devfs", "ramfs", "fatfs", "procfs", "sysfs", "etcfs"]
+default = ["ramfs", "procfs", "sysfs", "etcfs"]
 
 [dependencies]
 log = "0.4"
 cfg-if = "1.0"
 lazy_init = { path = "../../crates/lazy_init" }
 capability = { path = "../../crates/capability" }
-driver_block = { path = "../../crates/driver_block" }
+driver_block = { path = "../../crates/driver_block", optional = true }
 axio = { path = "../../crates/axio", features = ["alloc"] }
 axerrno = { path = "../../crates/axerrno" }
 axfs_vfs = { path = "../../crates/axfs_vfs" }

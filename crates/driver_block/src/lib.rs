@@ -17,6 +17,7 @@
 // pub mod ramdisk;
 #[cfg(feature = "ramdisk")]
 pub mod stream_disk;
+#[cfg(feature = "ramdisk")]
 pub use stream_disk as ramdisk;
 
 #[cfg(feature = "bcm2835-sdhci")]
