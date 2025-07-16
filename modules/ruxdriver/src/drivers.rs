@@ -79,6 +79,7 @@ cfg_if::cfg_if! {
                     let size = std::fs::metadata(unsafe { &IMAGE_PATH }).unwrap().len() as usize;
                     let ramdisk = driver_block::ramdisk::RamDisk::new(size);
                     // driver_block::ramdisk::RamDisk::new(unsafe { &IMAGE_PATH })
+                    Some(AxDeviceEnum::from_block(ramdisk))
                 ))
             }
         }
