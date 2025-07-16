@@ -76,7 +76,9 @@ cfg_if::cfg_if! {
                 // TODO: format RAM disk
                 Some(AxDeviceEnum::from_block(
                     // driver_block::ramdisk::RamDisk::new(0x100_0000), // 16 MiB
-                    driver_block::ramdisk::RamDisk::new(unsafe { &IMAGE_PATH })
+                    let size = std::fs::metadata(unsafe { &IMAGE_PATH }).unwrap().len() as usize;
+                    let ramdisk = driver_block::ramdisk::RamDisk::new(size);
+                    // driver_block::ramdisk::RamDisk::new(unsafe { &IMAGE_PATH })
                 ))
             }
         }
