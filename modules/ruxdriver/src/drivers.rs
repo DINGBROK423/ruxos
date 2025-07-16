@@ -11,6 +11,9 @@
 
 #![allow(unused_imports)]
 
+extern crate std;
+use std::println;
+
 use crate::{AxDeviceEnum, IMAGE_PATH};
 use driver_common::DeviceType;
 
