@@ -73,14 +73,14 @@ cfg_if::cfg_if! {
 
         impl DriverProbe for RamDiskDriver {
             fn probe_global() -> Option<AxDeviceEnum> {
-                // TODO: format RAM disk
-                Some(AxDeviceEnum::from_block(
-                    // driver_block::ramdisk::RamDisk::new(0x100_0000), // 16 MiB
-                    let size = std::fs::metadata(unsafe { &IMAGE_PATH }).unwrap().len() as usize;
-                    let ramdisk = driver_block::ramdisk::RamDisk::new(size);
-                    // driver_block::ramdisk::RamDisk::new(unsafe { &IMAGE_PATH })
-                    Some(AxDeviceEnum::from_block(ramdisk))
-                ))
+            // TODO: format RAM disk
+
+            // driver_block::ramdisk::RamDisk::new(0x100_0000), // 16 MiB
+            let size = std::fs::metadata(unsafe { &IMAGE_PATH }).unwrap().len() as usize;
+            let ramdisk = driver_block::ramdisk::RamDisk::new(size);
+            // driver_block::ramdisk::RamDisk::new(unsafe { &IMAGE_PATH })
+            Some(AxDeviceEnum::from_block(ramdisk))
+         
             }
         }
     }
